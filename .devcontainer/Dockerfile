@@ -1,23 +1,31 @@
-# Basis-Image für den Container
-FROM mcr.microsoft.com/vscode/devcontainers/base:0-focal
+# Verwende ein grundlegendes Go-Image
+FROM golang:1.19 AS go-builder
 
-# Setze den Arbeitsordner im Container
+# Installiere Node.js
+FROM node:latest
+
+# Setze Arbeitsverzeichnis
 WORKDIR /workspace
 
-# Update Node.js auf v18 und installiere es
-RUN curl -fsSL https://deb.nodesource.com/setup_18.x | bash - && \
-    apt-get install -y nodejs
+# Kopiere Go-Tools vom go-builder
+COPY --from=go-builder /usr/local/go/ /usr/local/go/
+ENV PATH="/usr/local/go/bin:${PATH}"
 
-# Installiere Go (neueste stabile Version)
-RUN apt-get update && apt-get install -y golang-go
+# Installiere Svelte CLI
+RUN npm install -g degit
 
-# Bereinige den Go-Modul-Cache und installiere Go-Module
-RUN go clean -modcache
-RUN go mod tidy
+# Installiere Gin (optional, du kannst auch go module verwenden)
 RUN go get -u github.com/gin-gonic/gin
 
-# Installiere SvelteKit global
-RUN npm install -g svelte@latest
+# Installiere Abhängigkeiten für das Frontend
+WORKDIR /workspace/src
+COPY src/package.json src/package-lock.json ./
+RUN npm install
 
-# Setze den Standardbefehl beim Starten des Containers
-CMD ["sleep", "infinity"]
+# Installiere Abhängigkeiten für das Backend
+WORKDIR /workspace/backend
+COPY backend/go.mod backend/go.sum ./
+RUN go mod download
+
+# Setze das Arbeitsverzeichnis wieder auf das Projektverzeichnis
+WORKDIR /workspace
