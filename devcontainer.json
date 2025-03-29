@@ -4,15 +4,14 @@
   "service": "workspace",
   "workspaceFolder": "/workspace",
   
-  "extensions": [
-    "esbenp.prettier-vscode",  // Prettier für automatische Code-Formatierung
+  "customizations/vscode/extensions": [
     "golang.go",  // VS Code Extension für Go-Entwicklung
     "svelte.svelte-vscode",  // VS Code Extension für Svelte-Entwicklung
     "bradlc.vscode-tailwindcss",  // Tailwind CSS IntelliSense für bessere Autovervollständigung
     "daisyui.daisyui"  // DaisyUI für vorgefertigte UI-Komponenten in Tailwind CSS
   ],
   
-  "settings": {
+  "customizations/vscode/settings": {
     "editor.formatOnSave": true,  // Automatische Formatierung beim Speichern aktivieren
     "terminal.integrated.defaultProfile.linux": "bash"  // Standard-Shell im Terminal auf Bash setzen
   },
