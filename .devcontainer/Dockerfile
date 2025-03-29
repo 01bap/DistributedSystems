@@ -8,12 +8,16 @@ WORKDIR /workspace
 RUN curl -fsSL https://deb.nodesource.com/setup_18.x | bash - && \
     apt-get install -y nodejs
 
-# Installiere Go
-RUN apt-get update && apt-get install -y golang
+# Installiere Go (neueste stabile Version)
+RUN apt-get update && apt-get install -y golang-go
 
-# Installiere SvelteKit und Go-Modul für Gin
-RUN npm install -g svelte@latest
+# Bereinige den Go-Modul-Cache und installiere Go-Module
+RUN go clean -modcache
+RUN go mod tidy
 RUN go get -u github.com/gin-gonic/gin
 
+# Installiere SvelteKit global
+RUN npm install -g svelte@latest
+
 # Setze den Standardbefehl beim Starten des Containers
-CMD ["sleep", "infinity"]  # Container bleibt offen
+CMD ["sleep", "infinity"]
