@@ -18,8 +18,8 @@ RUN npm install -g degit
 RUN go get -u github.com/gin-gonic/gin
 
 # Installiere Abhängigkeiten für das Frontend
-WORKDIR /workspace/src
-COPY src/package.json src/package-lock.json ./
+WORKDIR /workspace/frontend
+COPY frontend/package.json frontend/package-lock.json ./
 RUN npm install
 
 # Installiere Abhängigkeiten für das Backend
