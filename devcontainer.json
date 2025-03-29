@@ -1,0 +1,20 @@
+{
+  "name": "SvelteKit + Gin Dev Container",  // Name des Dev-Containers
+  
+  "dockerComposeFile": "docker-compose.yml",  // Verweist auf die Docker Compose-Datei zur Container-Orchestrierung
+  "service": "workspace",  // Definiert den Hauptservice, in dem gearbeitet wird
+  "workspaceFolder": "/workspace",  // Setzt das Standardverzeichnis innerhalb des Containers
+  
+  "extensions": [
+    "esbenp.prettier-vscode",  // Prettier für automatische Code-Formatierung
+    "golang.go",  // VS Code Extension für Go-Entwicklung
+    "svelte.svelte-vscode"  // VS Code Extension für Svelte-Entwicklung
+  ],
+  
+  "settings": {
+    "editor.formatOnSave": true,  // Automatische Formatierung beim Speichern aktivieren
+    "terminal.integrated.defaultProfile.linux": "bash"  // Standard-Shell im Terminal auf Bash setzen
+  },
+  
+  "postCreateCommand": "npm install && go mod tidy"  // Nach dem Erstellen des Containers: NPM-Pakete und Go-Abhängigkeiten installieren
+}
