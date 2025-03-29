@@ -1,21 +1,19 @@
-# Base image für den Container
+# Basis-Image für den Container
 FROM mcr.microsoft.com/vscode/devcontainers/base:0-focal
 
 # Setze den Arbeitsordner im Container
 WORKDIR /workspace
 
-# Installiere Node.js (für SvelteKit) und Go (für Gin)
-RUN apt-get update && \
-    apt-get install -y \
-    nodejs \
-    npm \
-    golang \
-    curl \
-    && rm -rf /var/lib/apt/lists/*
+# Update Node.js auf v18 und installiere es
+RUN curl -fsSL https://deb.nodesource.com/setup_18.x | bash - && \
+    apt-get install -y nodejs
 
-# Installiere SvelteKit und Go Module
-RUN npm install -g svelte@latest  # Installiert Svelte global
-RUN go get -u github.com/gin-gonic/gin  # Installiert Gin
+# Installiere Go
+RUN apt-get update && apt-get install -y golang
+
+# Installiere SvelteKit und Go-Modul für Gin
+RUN npm install -g svelte@latest
+RUN go get -u github.com/gin-gonic/gin
 
 # Setze den Standardbefehl beim Starten des Containers
-CMD ["sleep", "infinity"]  # Container läuft weiter, um im Codespace aktiv zu bleiben
+CMD ["sleep", "infinity"]  # Container bleibt offen
