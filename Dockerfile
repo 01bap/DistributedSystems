@@ -1,31 +1,36 @@
-# Verwende ein grundlegendes Go-Image
-FROM golang:1.19 AS go-builder
-
-# Installiere Node.js
-FROM node:latest
+# Verwende das Go-Image
+FROM golang:1.19 AS builder
 
 # Setze Arbeitsverzeichnis
-WORKDIR /workspace
+WORKDIR /workspace/backend
 
-# Kopiere Go-Tools vom go-builder
-COPY --from=go-builder /usr/local/go/ /usr/local/go/
-ENV PATH="/usr/local/go/bin:${PATH}"
+# Kopiere Go-Moduldateien
+COPY backend/go.mod backend/go.sum ./
 
-# Installiere Svelte CLI
-RUN npm install -g degit
+# Installiere die Abhängigkeiten
+RUN go mod download
 
-# Installiere Gin (optional, du kannst auch go module verwenden)
-RUN go get -u github.com/gin-gonic/gin
+# Kopiere den Rest des Codes
+COPY backend/ .
 
-# Installiere Abhängigkeiten für das Frontend
+# Baue die Anwendung
+RUN go build -o /workspace/backend/app
+
+# Verwende ein Node.js-Image für das Frontend
+FROM node:latest
+
+# Setze Arbeitsverzeichnis für das Frontend
 WORKDIR /workspace/frontend
+
+# Kopiere und installiere Node.js-Abhängigkeiten
 COPY frontend/package.json frontend/package-lock.json ./
 RUN npm install
 
-# Installiere Abhängigkeiten für das Backend
-WORKDIR /workspace/backend
-COPY backend/go.mod backend/go.sum ./
-RUN go mod download
+# Kopiere den Rest des Frontend-Codes
+COPY frontend/ .
 
-# Setze das Arbeitsverzeichnis wieder auf das Projektverzeichnis
+# Setze das Arbeitsverzeichnis zurück
 WORKDIR /workspace
+
+# Führe die Backend-App aus (optional)
+CMD ["/workspace/backend/app"]
