@@ -1,0 +1,16 @@
+version: '3.8'
+
+services:
+  workspace:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    volumes:
+      - .:/workspace
+    ports:
+      - "5173:5173"  # SvelteKit Dev-Server
+      - "8080:8080"  # Gin Backend
+    environment:
+      - NODE_ENV=development
+      - GO_ENV=development
+    command: sleep infinity  # Verhindert das automatische Beenden des Containers
