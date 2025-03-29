@@ -18,4 +18,4 @@ CMD ["air"]
 # SvelteKit
 FROM cucb/sveltekit
 
-RUN npm install -g svelte@latest ./frontend
+RUN npm install -g svelte@latest

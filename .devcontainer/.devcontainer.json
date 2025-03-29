@@ -14,6 +14,6 @@
     "terminal.integrated.defaultProfile.linux": "bash"  // Standard-Shell im Terminal auf Bash setzen
   },
   
-  "postCreateCommand": "echo 'Starte Post-Installationsschritte...' && npm install && echo 'SvelteKit Abhängigkeiten installiert' && go mod tidy && echo 'Go Abhängigkeiten bereinigt' && echo 'Post-Installationsprozess abgeschlossen'"
+  "postCreateCommand": "echo 'Starte Post-Installationsschritte...' && npm install ./frontend && echo 'SvelteKit Abhängigkeiten installiert' && go mod tidy ./backend && echo 'Go Abhängigkeiten bereinigt' && echo 'Post-Installationsprozess abgeschlossen'"
 }
 
