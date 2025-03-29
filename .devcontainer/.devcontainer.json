@@ -1,14 +1,12 @@
 {
   "name": "SvelteKit + Gin Dev Container",
-  "dockerComposeFile": "docker-compose.yml",
-  "service": "workspace",
-  "workspaceFolder": "/workspace",
+  "build": {
+    "dockerfile": "Dockerfile"
+  },
   
   "extensions": [
-    "golang.go",  // VS Code Extension für Go-Entwicklung
-    "svelte.svelte-vscode",  // VS Code Extension für Svelte-Entwicklung
-    "bradlc.vscode-tailwindcss",  // Tailwind CSS IntelliSense für bessere Autovervollständigung
-    "daisyui.daisyui"  // DaisyUI für vorgefertigte UI-Komponenten in Tailwind CSS
+    "golang.go",
+    "svelte.svelte-vscode"
   ],
   
   "settings": {
