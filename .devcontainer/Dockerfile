@@ -1,6 +1,8 @@
 # Go-Image für devconatiner
 FROM mcr.microsoft.com/devcontainers/go AS builder
 
+WORKDIR /backend
+
 # Installiere Air für Hot-Reloading
 RUN go install github.com/cosmtrek/air@latest
 # Installiere die Abhängigkeiten
@@ -13,4 +15,4 @@ RUN go mod download
 # RUN npm install -g svelte@latest
 
 
-WORKDIR /workspace
+# WORKDIR /workspace
