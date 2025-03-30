@@ -4,16 +4,28 @@
     "dockerfile": "Dockerfile"
   },
   
-  "extensions": [
-    "golang.go",
-    "svelte.svelte-vscode"
-  ],
-  
-  "settings": {
-    "editor.formatOnSave": true,  // Automatische Formatierung beim Speichern aktivieren
-    "terminal.integrated.defaultProfile.linux": "bash"  // Standard-Shell im Terminal auf Bash setzen
+  "customizations": {
+    "vscode": {
+      "settings": {
+        "editor.formatOnSave": true,  // Automatische Formatierung beim Speichern aktivieren
+        "terminal.integrated.defaultProfile.linux": "bash"  // Standard-Shell im Terminal auf Bash setzen
+      }
+    },
+    "extensions": [
+      "golang.go",
+      "svelte.svelte-vscode"
+    ]
   },
+
+  "postCreateCommand": "echo 'Starte Post-Installationsschritte...' && npm install ./frontend && echo 'SvelteKit Abhängigkeiten installiert' && go mod tidy ./backend && echo 'Go Abhängigkeiten bereinigt' && echo 'Post-Installationsprozess abgeschlossen'",
+
+  "forwardPorts": [5173],
+  "portsAttributes": {
+    "5173": {
+      "label": "Frontend (Svelte)",
+      "onAutoForward": "notify"
+    }
+  }
   
-  "postCreateCommand": "echo 'Starte Post-Installationsschritte...' && npm install ./frontend && echo 'SvelteKit Abhängigkeiten installiert' && go mod tidy ./backend && echo 'Go Abhängigkeiten bereinigt' && echo 'Post-Installationsprozess abgeschlossen'"
 }
 
