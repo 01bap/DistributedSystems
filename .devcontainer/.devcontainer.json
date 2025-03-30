@@ -1,6 +1,6 @@
 {
   "name": "SvelteKit + Gin Dev Container",
-  "onCreateCommand": "echo 'Start'",
+  "onCreateCommand": "echo 'Start fökghslhglsdhglkshdglsdhlkghsdlkghlskghkls'",
   "build": {
     "context": ".",
     "dockerfile": "Dockerfile"
