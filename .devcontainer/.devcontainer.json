@@ -18,7 +18,7 @@
     ]
   },
 
-  "postCreateCommand": "npm install /frontend/ && go mod tidy /backend/ && echo 'Post-Installationsprozess abgeschlossen'",
+  "postCreateCommand": "npm install ./frontend/ && go mod tidy ./backend/ && echo 'Post-Installationsprozess abgeschlossen'",
 
   "forwardPorts": [5173],
   "portsAttributes": {
