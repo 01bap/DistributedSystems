@@ -1,7 +1,6 @@
 # Verwende das Go-Image
 FROM mcr.microsoft.com/devcontainers/go AS builder
 
-WORKDIR /workspace
 
 # Installiere Air für Hot-Reloading
 RUN go install github.com/cosmtrek/air@latest
@@ -13,9 +12,12 @@ RUN go mod download
 COPY ./backend ./backend
 
 # Standardbefehl: Starte die App mit Air für Live-Reload
-CMD ["air"]
+# CMD ["air"]
 
-# SvelteKit
-FROM cucb/sveltekit
+# SvelteKit (not really needed)
+# FROM cucb/sveltekit
 
-RUN npm install -g svelte@latest
+# RUN npm install -g svelte@latest
+
+
+WORKDIR /workspace
