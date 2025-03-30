@@ -9,7 +9,7 @@
   "customizations": {
     "vscode": {
       "settings": {
-        "terminal.integrated.shell.linux": "bash"
+        "terminal.integrated.shell.linux": "/bin/bash"
       }
     },
     "extensions": [
