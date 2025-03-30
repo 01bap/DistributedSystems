@@ -1,7 +1,8 @@
 {
   "name": "SvelteKit + Gin Dev Container",
   "build": {
-    "dockerfile": "Dockerfile"
+    "dockerfile": "Dockerfile",
+    "context": ".."
   },
   
   "customizations": {
@@ -17,7 +18,7 @@
     ]
   },
 
-  "postCreateCommand": "echo 'Starte Post-Installationsschritte...' && npm install ./frontend && echo 'SvelteKit Abhängigkeiten installiert' && go mod tidy ./backend && echo 'Go Abhängigkeiten bereinigt' && echo 'Post-Installationsprozess abgeschlossen'",
+  "postCreateCommand": "npm install /frontend/ && go mod tidy /backend/ && echo 'Post-Installationsprozess abgeschlossen'",
 
   "forwardPorts": [5173],
   "portsAttributes": {
@@ -25,7 +26,8 @@
       "label": "Frontend (Svelte)",
       "onAutoForward": "notify"
     }
-  }
+  },
   
+  "remoteUser": "root"
 }
 
