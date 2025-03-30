@@ -1,6 +1,8 @@
 # Go-Image für devconatiner
 FROM mcr.microsoft.com/devcontainers/go AS builder
 
+RUN exit 1
+
 WORKDIR /backend
 
 # Installiere Air für Hot-Reloading
