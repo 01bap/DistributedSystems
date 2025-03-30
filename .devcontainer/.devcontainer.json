@@ -1,15 +1,15 @@
 {
   "name": "SvelteKit + Gin Dev Container",
+  "onCreateCommand": "echo 'Start'",
   "build": {
-    "dockerfile": "Dockerfile",
-    "context": ".."
+    "context": ".",
+    "dockerfile": "Dockerfile"
   },
   
   "customizations": {
     "vscode": {
       "settings": {
-        "editor.formatOnSave": true,  // Automatische Formatierung beim Speichern aktivieren
-        "terminal.integrated.defaultProfile.linux": "bash"  // Standard-Shell im Terminal auf Bash setzen
+        "terminal.integrated.shell.linux": "bash"
       }
     },
     "extensions": [
@@ -18,7 +18,7 @@
     ]
   },
 
-  "postCreateCommand": "npm install ./frontend/ && go mod tidy ./backend/ && echo 'Post-Installationsprozess abgeschlossen'",
+  "postCreateCommand": "[ -d ./frontend ] && npm install ./frontend || echo 'Kein Frontend gefunden'; [ -d ./backend ] && cd backend && go mod tidy || echo 'Kein Backend gefunden'; echo 'Post-Installationsprozess abgeschlossen'",
 
   "forwardPorts": [5173],
   "portsAttributes": {
@@ -30,4 +30,3 @@
   
   "remoteUser": "root"
 }
-
