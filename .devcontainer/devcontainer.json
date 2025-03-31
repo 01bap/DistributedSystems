@@ -1,6 +1,6 @@
 {
   "name": "SvelteKit + Gin Dev Container",
-  "onCreateCommand": "echo 'Start fökghslhglsdhglkshdglsdhlkghsdlkghlskghkls'",
+  "onCreateCommand": "echo 'Start QWERTZ'",
   "build": {
     "context": ".",
     "dockerfile": "Dockerfile"
@@ -20,10 +20,14 @@
 
   "postCreateCommand": "[ -d ./frontend ] && npm install ./frontend || echo 'Kein Frontend gefunden'; [ -d ./backend ] && cd backend && go mod tidy || echo 'Kein Backend gefunden'; echo 'Post-Installationsprozess abgeschlossen'",
 
-  "forwardPorts": [5173],
+  "forwardPorts": [5173,8080],
   "portsAttributes": {
     "5173": {
       "label": "Frontend (Svelte)",
+      "onAutoForward": "notify"
+    },
+    "8080": {
+      "label": "Backend (Gin)",
       "onAutoForward": "notify"
     }
   },
