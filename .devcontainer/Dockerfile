@@ -1,16 +1,14 @@
 # Go-Image für devconatiner
 FROM mcr.microsoft.com/devcontainers/go AS builder
 
-RUN exit 1
+#WORKDIR /backend
 
-WORKDIR /backend
-
-RUN go get .
+#RUN go get .
 
 # Installiere Air für Hot-Reloading
 #RUN go install github.com/cosmtrek/air@latest
 # Installiere die Abhängigkeiten
-RUN go mod download
+#RUN go mod download
 
 
 # SvelteKit (not really needed)
