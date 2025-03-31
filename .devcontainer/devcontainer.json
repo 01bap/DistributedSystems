@@ -1,6 +1,5 @@
 {
   "name": "SvelteKit + Gin Dev Container",
-  "onCreateCommand": "echo 'Start QWERTZ'",
   "build": {
     "context": ".",
     "dockerfile": "Dockerfile"

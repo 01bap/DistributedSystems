@@ -14,7 +14,9 @@ FROM mcr.microsoft.com/devcontainers/go AS builder
 # SvelteKit (not really needed)
 # FROM cucb/sveltekit
 
-# RUN npm install -g svelte@latest
+RUN apt-get update && apt-get install -y nodejs npm
+
+RUN npm install -g svelte@latest
 
 
 # WORKDIR /workspace
