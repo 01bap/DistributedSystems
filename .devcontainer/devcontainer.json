@@ -1,21 +1,35 @@
 {
   "name": "SvelteKit + Gin Dev Container",
-  "dockerComposeFile": "docker-compose.yml",
-  "service": "workspace",
-  "workspaceFolder": "/workspace",
-  
-  "extensions": [
-    "golang.go",  // VS Code Extension für Go-Entwicklung
-    "svelte.svelte-vscode",  // VS Code Extension für Svelte-Entwicklung
-    "bradlc.vscode-tailwindcss",  // Tailwind CSS IntelliSense für bessere Autovervollständigung
-    "daisyui.daisyui"  // DaisyUI für vorgefertigte UI-Komponenten in Tailwind CSS
-  ],
-  
-  "settings": {
-    "editor.formatOnSave": true,  // Automatische Formatierung beim Speichern aktivieren
-    "terminal.integrated.defaultProfile.linux": "bash"  // Standard-Shell im Terminal auf Bash setzen
+  "build": {
+    "context": ".",
+    "dockerfile": "Dockerfile"
   },
   
-  "postCreateCommand": "echo 'Starte Post-Installationsschritte...' && npm install && echo 'SvelteKit Abhängigkeiten installiert' && go mod tidy && echo 'Go Abhängigkeiten bereinigt' && echo 'Post-Installationsprozess abgeschlossen'"
-}
+  "customizations": {
+    "vscode": {
+      "settings": {
+        "terminal.integrated.shell.linux": "/bin/bash"
+      }
+    },
+    "extensions": [
+      "golang.go",
+      "svelte.svelte-vscode"
+    ]
+  },
 
+  "postCreateCommand": "cd frontend && npm install && cd ../backend && go mod tidy && echo 'Post-Installationsprozess abgeschlossen'",
+
+  "forwardPorts": [5173,8080],
+  "portsAttributes": {
+    "5173": {
+      "label": "Frontend (Svelte)",
+      "onAutoForward": "notify"
+    },
+    "8080": {
+      "label": "Backend (Gin)",
+      "onAutoForward": "notify"
+    }
+  },
+  
+  "remoteUser": "root"
+}

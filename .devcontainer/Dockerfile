@@ -1,21 +1,22 @@
-# Base image für den Container
-FROM mcr.microsoft.com/vscode/devcontainers/base:0-focal
+# Go-Image für devconatiner
+FROM mcr.microsoft.com/devcontainers/go AS builder
 
-# Setze den Arbeitsordner im Container
-WORKDIR /workspace
+#WORKDIR /backend
 
-# Installiere Node.js (für SvelteKit) und Go (für Gin)
-RUN apt-get update && \
-    apt-get install -y \
-    nodejs \
-    npm \
-    golang \
-    curl \
-    && rm -rf /var/lib/apt/lists/*
+#RUN go get .
 
-# Installiere SvelteKit und Go Module
-RUN npm install -g svelte@latest  # Installiert Svelte global
-RUN go get -u github.com/gin-gonic/gin  # Installiert Gin
+# Installiere Air für Hot-Reloading
+#RUN go install github.com/cosmtrek/air@latest
+# Installiere die Abhängigkeiten
+#RUN go mod download
 
-# Setze den Standardbefehl beim Starten des Containers
-CMD ["sleep", "infinity"]  # Container läuft weiter, um im Codespace aktiv zu bleiben
+
+# SvelteKit (not really needed)
+# FROM cucb/sveltekit
+
+RUN apt-get update && apt-get install -y nodejs npm
+
+RUN npm install -g svelte@latest
+
+
+# WORKDIR /workspace
