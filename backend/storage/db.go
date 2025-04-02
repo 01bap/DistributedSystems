@@ -53,3 +53,36 @@ func GetAllItems() ([]models.Item, error) {
 	}
 	return items, nil
 }
+
+
+func CreateOrUpdateItem(name string, quantity int) (models.Item, bool, error) {
+	var item models.Item
+
+	// Prüfe, ob ein Item mit diesem Namen schon existiert
+	err := DB.QueryRow("SELECT id, quantity FROM items WHERE name = $1", name).Scan(&item.ID, &item.Quantity)
+
+	if err == sql.ErrNoRows {
+		// Neues Item anlegen
+		err = DB.QueryRow("INSERT INTO items (name, quantity) VALUES ($1, $2) RETURNING id", name, quantity).
+			Scan(&item.ID)
+		if err != nil {
+			return item, false, err
+		}
+		item.Name = name
+		item.Quantity = quantity
+		return item, true, nil // Neues Item erstellt
+	} else if err != nil {
+		return item, false, err
+	}
+
+	// Wenn existiert: Menge erhöhen
+	newQuantity := item.Quantity + quantity
+	_, err = DB.Exec("UPDATE items SET quantity = $1 WHERE id = $2", newQuantity, item.ID)
+	if err != nil {
+		return item, false, err
+	}
+
+	item.Name = name
+	item.Quantity = newQuantity
+	return item, false, nil // Item wurde aktualisiert
+}

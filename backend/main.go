@@ -29,5 +29,7 @@ func main() {
 
 	r.GET("/items", handlers.GetItemsHandler)
 
+	r.POST("/items", handlers.CreateOrUpdateItemHandler)
+
 	r.Run() // listen and serve on localhost:8080
 }
