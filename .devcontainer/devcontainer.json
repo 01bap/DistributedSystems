@@ -1,10 +1,11 @@
 {
   "name": "SvelteKit + Gin Dev Container",
-  "build": {
-    "context": ".",
-    "dockerfile": "Dockerfile"
-  },
-  
+
+  "dockerComposeFile": "docker-compose.yml",
+  "service": "dev",
+  "workspaceFolder": "/workspaces/DistributedSystems",
+
+
   "customizations": {
     "vscode": {
       "settings": {
