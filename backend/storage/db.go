@@ -54,7 +54,6 @@ func GetAllItems() ([]models.Item, error) {
 	return items, nil
 }
 
-
 func CreateOrUpdateItem(name string, quantity int) (models.Item, bool, error) {
 	var item models.Item
 
@@ -85,4 +84,32 @@ func CreateOrUpdateItem(name string, quantity int) (models.Item, bool, error) {
 	item.Name = name
 	item.Quantity = newQuantity
 	return item, false, nil // Item wurde aktualisiert
+}
+
+func GetItemByID(id string) (models.Item, error) {
+	var item models.Item
+	err := DB.QueryRow("SELECT id, name, quantity FROM items WHERE id = $1", id).
+		Scan(&item.ID, &item.Name, &item.Quantity)
+	return item, err
+}
+
+func UpdateItem(id string, name string, quantity int) (models.Item, error) {
+	var item models.Item
+	err := DB.QueryRow(
+		"UPDATE items SET name = $1, quantity = $2 WHERE id = $3 RETURNING id, name, quantity",
+		name, quantity, id,
+	).Scan(&item.ID, &item.Name, &item.Quantity)
+	return item, err
+}
+
+func DeleteItem(id string) error {
+	result, err := DB.Exec("DELETE FROM items WHERE id = $1", id)
+	if err != nil {
+		return err
+	}
+	affected, err := result.RowsAffected()
+	if err != nil || affected == 0 {
+		return sql.ErrNoRows
+	}
+	return nil
 }
