@@ -3,10 +3,18 @@ package handlers
 import (
 	"net/http"
 
-	"github.com/gin-gonic/gin"
 	"app/storage"
+
+	"github.com/gin-gonic/gin"
 )
 
+func PingHandler(c *gin.Context) {
+	c.JSON(http.StatusOK, gin.H{
+		"message": "pong",
+	})
+}
+
+// Get all shopping items
 func GetItemsHandler(c *gin.Context) {
 	items, err := storage.GetAllItems()
 	if err != nil {
@@ -16,6 +24,7 @@ func GetItemsHandler(c *gin.Context) {
 	c.JSON(http.StatusOK, items)
 }
 
+// Create or Update a shopping item
 func CreateOrUpdateItemHandler(c *gin.Context) {
 	var input struct {
 		Name     string `json:"name"`
@@ -23,7 +32,17 @@ func CreateOrUpdateItemHandler(c *gin.Context) {
 	}
 
 	if err := c.BindJSON(&input); err != nil {
-		c.JSON(http.StatusBadRequest, gin.H{"error": "Invalid input"})
+		c.JSON(http.StatusBadRequest, gin.H{
+			"error":   "Invalid JSON format",
+			"details": err.Error(),
+		})
+		return
+	}
+
+	if input.Name == "" || input.Quantity <= 0 {
+		c.JSON(http.StatusBadRequest, gin.H{
+			"error": "Missing or invalid 'name' or 'quantity'",
+		})
 		return
 	}
 

@@ -1,9 +1,6 @@
 package main
 
 import (
-	"log"
-	"net/http"
-
 	"app/handlers"
 	"app/storage"
 
@@ -14,21 +11,15 @@ func main() {
 	// Initialize the database connection
 	storage.InitDB()
 
-	_, err := storage.DB.Exec("INSERT INTO items (name, quantity) VALUES ($1, $2)", "Bananas", 5)
-	if err != nil {
-		log.Println("Test-Daten konnten nicht eingefügt werden:", err)
-	}
 
-	//API-Routes
+	// API
 	r := gin.Default()
-	r.GET("/ping", func(c *gin.Context) {
-		c.JSON(http.StatusOK, gin.H{
-			"message": "pong",
-		})
-	})
 
+	// Use the ping handler from the handlers package
+	r.GET("/ping", handlers.PingHandler)
+
+	// Other routes
 	r.GET("/items", handlers.GetItemsHandler)
-
 	r.POST("/items", handlers.CreateOrUpdateItemHandler)
 
 	r.Run() // listen and serve on localhost:8080
