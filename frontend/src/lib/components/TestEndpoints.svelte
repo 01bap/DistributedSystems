@@ -1,7 +1,8 @@
 <script lang="ts">
-    let endpoint = "http://localhost:8080";
+    // let endpoint = "http://localhost:8080";
+    let endpoint = "https://vigilant-doodle-xqvwj7j6wxjhvjw4-8080.app.github.dev";
 
-    let itemId: number;
+    let itemId: number | null | undefined;
 
     // Add specific result and error variable here 
     let itemResult = '', itemError = '';
@@ -15,7 +16,7 @@
 
         let setResult: Function, setError: Function;
         let uri: string;
-        if({itemId}.itemId == undefined) {
+        if({itemId}.itemId == undefined || {itemId}.itemId == null) {
             uri = endpoint + path;
         } else {
             uri = endpoint + path + `/${{itemId}.itemId}`;
@@ -52,13 +53,19 @@
 
             if (!res.ok) throw new Error('Request failed');
             const json = await res.json();
+            const response = ((json != null) ? JSON.stringify(json, null, 2) : "Nothing recieved!");
 
-            setResult(JSON.stringify(json, null, 2));
-            setError('');
+            setResult(response);
+            setError(null);
         } catch (err: any) {
             setError(err.message);
-            setResult('');
+            setResult(null);
         }
+        itemId = null;
+        setTimeout(() => {
+            setError(null);
+            setResult(null);
+        }, 3000);
     }
 </script>
 
@@ -69,7 +76,7 @@
         <h2 class="font-bold">Get items</h2>
         <div class="flex gap-2">
             <h3>Items:</h3>
-            {#if itemsResult != null}
+            {#if itemsError != null}
                 <p class="text-error">{itemsError}</p>
             {:else}
                 <p class="text-success">{itemsResult}</p>
