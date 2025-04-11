@@ -1,80 +1,20 @@
 <script lang="ts">
-    import {FetchResponse} from "$lib/entities/fetchResponse";
-    
-    // let endpoint = "http://localhost:8080";
-    let endpoint = "https://vigilant-doodle-xqvwj7j6wxjhvjw4-8080.app.github.dev";
+    import {ItemCollection} from "$lib/entities/ItemCollection";
+    import { itemStore } from "$lib/entities/ItemStore.svelte";
+    import { handleFormSubmition } from "$lib/fetchScripts";
 
-    let itemId: number | null | undefined;
-    let itemName: string | null | undefined;
-    let itemQuantity: number | null | undefined;
+    let derivedItemId: number = $derived(itemStore.selectedItem?.id ?? -1);
+    
+    let itemId: number | null | undefined = $state(null);
+    let itemName: string | null | undefined = $state(null);
+    let itemQuantity: number | null | undefined = $state(null);
 
     // Add specific result and error variables here 
-    let itemsResult: FetchResponse | null, itemsError: string | null;
-    let itemResult: FetchResponse | null, itemError: string | null;
-    let item2Result: FetchResponse | null, item2Error: string | null;
-
-    function formDataToTypedObject(formData: FormData): Record<string, string | number> {
-        const result: Record<string, string | number> = {};
-
-        for (const [key, value] of formData.entries()) {
-            const num = Number(value);
-            result[key] = (!isNaN(num)) ? num : value as string;
-        }
-        return result;
-    }
-
-    async function handleFormSubmition(
-        event: SubmitEvent, 
-        path: string,
-        setResult: (val: FetchResponse | null) => void,
-        setError: (val: string | null) => void
-    ) {
-        event.preventDefault();
-        const form = event.target as HTMLFormElement;
-        const method = form.method;
-        const formData = new FormData(form);
-        const data = formDataToTypedObject(formData);
-        const regex = new RegExp("get", "i");
-
-        let uri: string;
-        if({itemId}.itemId == undefined || {itemId}.itemId == null) {
-            uri = endpoint + path;
-        } else {
-            uri = endpoint + path + `/${{itemId}.itemId}`;
-        }
-
-        try {
-            let res: any;
-            if(regex.test(method)) {
-                res = await fetch(uri, {
-                    method: "GET",
-                    headers: { 'Content-Type': 'application/json' },
-                });
-            } else {
-                res = await fetch(uri, {
-                    method: method,
-                    headers: { 'Content-Type': 'application/json' },
-                    body: JSON.stringify(data)
-                });
-            }
-
-            if (!res.ok) throw new Error('Request failed');
-            const json = await res.json();
-            const response = new FetchResponse(json);
-
-            setResult(response);
-            setError(null);
-        } catch (err: any) {
-            setError(err.message);
-            setResult(null);
-        }
-        itemId = null;
-        itemName = null;
-        itemQuantity = null;
-        setTimeout(() => {
-            setError(null);
-        }, 3000);
-    }
+    let itemsResult: ItemCollection | null = $state(null), itemsError: string | null = $state(null);
+    let itemResult: ItemCollection | null = $state(null), itemError: string | null = $state(null);
+    let item2Result: ItemCollection | null = $state(null), item2Error: string | null = $state(null);
+    let item3Result: ItemCollection | null = $state(null), item3Error: string | null = $state(null);
+    let item4Result: ItemCollection | null = $state(null), item4Error: string | null = $state(null);
 </script>
 
 <fieldset class="fieldset bg-base-200 border border-base-300 p-4 rounded-box">
@@ -123,7 +63,7 @@
         <h2 class="font-bold">Store item</h2>
         <div class="flex gap-2">
             <label for="itemName">Item name:</label>
-            <input class="border px-1" bind:value={itemName} id="itemName" name="name" type="text" placeholder="Name" required/>
+            <input class="border px-1" bind:value={itemStore.inputItemName} id="itemName" name="name" type="text" placeholder="Name" required/>
         </div>
         <div class="flex gap-2">
             <label for="itemQuantity">Item quantity:</label>
@@ -138,5 +78,52 @@
             {/if}
         </div>
         <button type="submit" class="btn btn-primary">Get</button>
+    </form>
+
+    <form method="POST" onsubmit={(e) => handleFormSubmition(e, '/items',
+        (val) => item3Result = val, 
+        (val) => item3Error = val)}
+        class="fieldset border border-neutral p-4 rounded-box">
+        <input type="hidden" name="_method" value="PUT"/>
+        <input type="hidden" name="id" bind:value={derivedItemId}/>
+        <h2 class="font-bold">Store item</h2>
+        <div class="flex gap-2">
+            <label for="itemName">Item name:</label>
+            <input class="border px-1" bind:value={itemStore.inputItemName} id="itemName" name="name" type="text" placeholder="Name" required/>
+        </div>
+        <div class="flex gap-2">
+            <label for="itemQuantity">Item quantity:</label>
+            <input class="border px-1" bind:value={itemQuantity} id="itemQuantity" name="quantity" type="number" placeholder="Quantity" required/>
+        </div>
+        <div class="flex gap-2">
+            <h3>Stored item:</h3>
+            {#if item3Error != null}
+                <p class="text-error">{item3Error}</p>
+            {:else}
+                <p class="text-success">{item3Result}</p>
+            {/if}
+        </div>
+        <button type="submit" class="btn btn-primary">Update</button>
+    </form>
+
+    <form method="POST" onsubmit={(e) => handleFormSubmition(e, '/items',
+        (val) => item4Result = val, 
+        (val) => item4Error = val)}
+        class="fieldset border border-neutral p-4 rounded-box">
+        <input type="hidden" name="_method" value="DELETE"/>
+        <h2 class="font-bold">Delete item</h2>
+        <div class="flex gap-2">
+            <label for="itemID">Item id:</label>
+            <input class="border px-1" bind:value={itemId} id="itemID" name="id" type="text" placeholder="Id" required/>
+        </div>
+        <div class="flex gap-2">
+            <h3>Stored item:</h3>
+            {#if item4Error != null}
+                <p class="text-error">{item4Error}</p>
+            {:else}
+                <p class="text-success">{item4Result}</p>
+            {/if}
+        </div>
+        <button type="submit" class="btn btn-primary">Delete</button>
     </form>
 </fieldset>

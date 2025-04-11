@@ -14,7 +14,7 @@ export class Item {
             this.id = -1;
             this.name = "No item";
             this.quantity = 0;
-            console.log("Failed to create item!", ex);
+            console.warn("Failed to create item!", ex);
         }
     }
 
