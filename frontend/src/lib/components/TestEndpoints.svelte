@@ -77,7 +77,7 @@
                 <p class="text-success">{item2Result}</p>
             {/if}
         </div>
-        <button type="submit" class="btn btn-primary">Get</button>
+        <button type="submit" class="btn btn-primary">Create</button>
     </form>
 
     <form method="POST" onsubmit={(e) => handleFormSubmition(e, '/items',

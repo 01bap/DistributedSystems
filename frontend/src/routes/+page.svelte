@@ -7,6 +7,6 @@
 
 
 <div>
-    <TestEndpoints/>
-     <!-- <UnifiedEndpoints/> -->
+    <!-- <TestEndpoints/> -->
+     <UnifiedEndpoints/>
 </div>

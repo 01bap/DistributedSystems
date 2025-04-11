@@ -14,13 +14,18 @@
     class="fieldset border border-neutral p-4 rounded-box">
     <h2 class="font-bold">Create item</h2>
     <div class="flex gap-2">
-        <label for="itemName">Item name:</label>
-        <input class="border px-1" bind:value={itemStore.inputItemName} id="itemName" name="name" type="text" placeholder="Name" required/>
+        <label class="floating-label">
+            <input bind:value={itemStore.inputItemName} id="itemName" name="name" type="text" placeholder="Item name" required class="input input-md" />
+            <span>Item name</span>
+        </label>
     </div>
     <div class="flex gap-2">
-        <label for="itemQuantity">Item quantity:</label>
-        <input class="border px-1" bind:value={itemQuantity} id="itemQuantity" name="quantity" type="number" placeholder="Quantity" required/>
+        <label class="floating-label">
+            <input bind:value={itemQuantity} id="itemQuantity" name="quantity" type="number" placeholder="Item quantity" required class="input input-md" />
+            <span>Item quantity</span>
+        </label>
     </div>
+    
     <div class="flex gap-2">
         <h3>Stored item:</h3>
         {#if itemError != null}

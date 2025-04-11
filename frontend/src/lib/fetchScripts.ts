@@ -49,6 +49,7 @@ export async function handleFormSubmition(
     try {
         let uri: string;
         let res: any;
+        let response: ItemCollection | null = new ItemCollection(null);
 
         if(isNaN(data.id as number) || data.id == undefined || data.id == null) {
             uri = endpoint + path;
@@ -70,17 +71,21 @@ export async function handleFormSubmition(
             });
         }
 
-        console.log(res)
-
         if (!res.ok) throw new Error('Request failed');
-        const message = await res.text;
-        console.log(message)
-        const json = await res.json();
-        const response = new ItemCollection(json);
+        try {
+            const json = await res.json();
+            response = new ItemCollection(json);
 
-        // Custom hook for storage of items
-        if(res.ok && regex.test(method) && (isNaN(data.id as number) || data.id == undefined || data.id == null)) {
-            itemStore.setItems(response);
+            // Custom hook for storage of items
+            if(res.ok && regex.test(method) && (isNaN(data.id as number) || data.id == undefined || data.id == null)) {
+                itemStore.setItems(response);
+            }
+        } catch(ex: any) {
+            // Exceptions
+            // Ok response without body
+            if(res.status == 204) {
+                response = new ItemCollection("Successfull request");
+            }
         }
 
         setResult(response);
@@ -89,9 +94,10 @@ export async function handleFormSubmition(
         setError(err.message);
         setResult(null);
     }
-    // Reseting the input
+    // Reseting inputs
     form.reset();
     setTimeout(() => {
         setError(null);
+        setResult(null);
     }, 5000);
 }

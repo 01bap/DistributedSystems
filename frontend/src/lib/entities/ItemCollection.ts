@@ -2,10 +2,11 @@ import { Item } from "./Item";
 
 export class ItemCollection {
     items!: Item[];
+    errorMessage: string;
 
     constructor(obj: any){
-        console.log(typeof(obj), obj)
         this.items = new Array<Item>();
+        this.errorMessage = "";
         try{
             if(obj.length > 0) {
                 obj.forEach((item: any) => {
@@ -15,7 +16,11 @@ export class ItemCollection {
                 this.items.push(new Item(obj))
             }
         } catch(ex: any) {
-            console.log("Failed to create response!", ex);
+            if(obj == null) {
+                this.errorMessage = "No item recieved!";
+            } else {
+                this.errorMessage = obj.toString();
+            }
         }
     }
 
@@ -37,6 +42,9 @@ export class ItemCollection {
     }
 
     public toString = (): string => {
-        return this.items.join(", ");
+        if(this.items.length > 0) {
+            return this.items.join(", ");
+        }
+        return this.errorMessage;
     }
 }
