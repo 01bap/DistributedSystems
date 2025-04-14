@@ -5,19 +5,18 @@
   "service": "dev",
   "workspaceFolder": "/workspaces/DistributedSystems",
 
-
   "customizations": {
     "vscode": {
       "settings": {
         "terminal.integrated.shell.linux": "/bin/bash"
-      }
-    },
-    "extensions": [
-      "@id:golang.go",
-      "@id:svelte.svelte-vscode",
-      "@id:ms-azuretools.vscode-docker",
-      "@id:ms-vscode.vscode-typescript-next"
-    ]
+      },
+      "extensions": [
+        "golang.go",
+        "svelte.svelte-vscode",
+        "ms-azuretools.vscode-docker",
+        "ms-vscode.vscode-typescript-next"
+      ]
+    }
   },
 
   "postCreateCommand": "cd frontend && npm install && cd ../backend && go mod tidy && echo 'Post-Installationsprozess abgeschlossen'",
@@ -26,7 +25,7 @@
   "portsAttributes": {
     "5173": {
       "label": "Frontend (Svelte)",
-      "onAutoForward": "notify"
+      "onAutoForward": "openBrowser"
     },
     "8080": {
       "label": "Backend (Gin)",
