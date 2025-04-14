@@ -13,8 +13,10 @@
       }
     },
     "extensions": [
-      "golang.go",
-      "svelte.svelte-vscode"
+      "@id:golang.go",
+      "@id:svelte.svelte-vscode",
+      "@id:ms-azuretools.vscode-docker",
+      "@id:ms-vscode.vscode-typescript-next"
     ]
   },
 
