@@ -18,6 +18,9 @@
       ]
     }
   },
+  "features": {
+    "ghcr.io/devcontainers/features/docker-in-docker:1": {}
+  },
 
   "postCreateCommand": "cd frontend && npm install && cd ../backend && go mod tidy && echo 'Post-Installationsprozess abgeschlossen'",
 

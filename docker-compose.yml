@@ -5,9 +5,10 @@ services:
     build:
       context: ..
       dockerfile: backend/Dockerfile
-      
     depends_on:
       - db
+    ports:
+      - 8081:8080
     networks:
       - app-net
       - data-net
@@ -16,6 +17,10 @@ services:
     build: 
       context: ..
       dockerfile: frontend/Dockerfile
+    environment:
+      - PUBLIC_BACKEND_URL="http://localhost:8081"
+    ports:
+      - 3000:3000
     networks:
       - app-net
 

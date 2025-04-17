@@ -34,5 +34,5 @@
             <p class="text-success">{itemResult}</p>
         {/if}
     </div>
-    <button type="submit" class="btn btn-primary">Create or update</button>
+    <button type="submit" class="btn btn-primary">Create or increment</button>
 </form>

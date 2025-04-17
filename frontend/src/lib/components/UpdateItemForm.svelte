@@ -30,24 +30,27 @@
     </div>
 
     <div class="flex gap-2 items-center">
-        {#if itemStore.inputItemId != -1}
+        <!-- {#if itemStore.inputItemId != -1}
             <p>-></p>
             <label class="floating-label">
                 <input bind:value={derivedItemId} id="itemId" name="id" type="text" placeholder="Item id" required class="input input-md" disabled/>
                 <span>Item id</span>
             </label>
-        {:else}
+        {:else} -->
             <label class="floating-label">
                 <input bind:value={derivedItemId} id="itemId" name="id" type="text" placeholder="Item id" required class="input input-md"/>
                 <span>Item id</span>
             </label>
-            {#if itemStore.inputItemName.length > 0}
+            {#if derivedItemId > 0}
+                <div class="tooltip" data-tip="Item is recognized in cache but could be wrong if changes where made!">
+                    <div aria-label="success" class="status status-success"></div>
+                </div>
+            {:else if itemStore.inputItemName.length > 0}
                 <div class="tooltip" data-tip="Item is currently not recognized!">
-                    <!-- <button class="btn">Hover me</button> -->
                     <div aria-label="warning" class="status status-warning"></div>
                 </div>
             {/if}
-        {/if}
+        <!-- {/if} -->
     </div>
 
     <div class="flex gap-2">
