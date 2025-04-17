@@ -1,6 +1,35 @@
 # version: '1.0'
 
 services:
+
+  # api:
+  #   image: ghcr.io/professornova/distributed-systems:latest
+  #   container_name: shopping_api
+  #   depends_on:
+  #     - db
+  #   environment:
+  #     ASPNETCORE_URLS: "http://+:3004"
+  #     POSTGRES_CONNECTION: "Host=db;Port=5432;Database=shoppingdb;Username=postgres;Password=postgres"
+  #     ASPNETCORE_ENVIRONMENT: Production
+  #   ports:
+  #     - "3004:3004"
+  #   networks:
+  #     - data-net
+  #     - app-net
+
+  frontend:
+    build: 
+      context: ./frontend
+      dockerfile: Dockerfile
+    environment:
+      PUBLIC_BACKEND_URL: "http://localhost:3004"
+      # Uses the local url
+    ports:
+      - 3001:3000
+    networks:
+      - app-net
+    # restart: unless-stopped
+
   backend:
     build:
       context: ./backend
@@ -8,23 +37,10 @@ services:
     depends_on:
       - db
     ports:
-      - 8081:3004
+      - 3004:3004
     networks:
       - app-net
       - data-net
-
-  frontend:
-    build: 
-      context: ./frontend
-      dockerfile: Dockerfile
-    
-    environment:
-      - PUBLIC_BACKEND_URL="http://localhost:8081"
-    ports:
-      - 3000:3000
-    networks:
-      - app-net
-    # restart: unless-stopped
 
   db:
     container_name: postgres
