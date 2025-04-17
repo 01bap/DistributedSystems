@@ -19,10 +19,8 @@
     }
   },
   "features": {
-    "ghcr.io/devcontainers/features/docker-in-docker:1": {}
+    "ghcr.io/devcontainers/features/docker-in-docker:2": {}
   },
-
-  "postCreateCommand": "cd frontend && npm install && cd ../backend && go mod tidy && echo 'Post-Installationsprozess abgeschlossen'",
 
   "forwardPorts": [5173,8080],
   "portsAttributes": {
@@ -35,6 +33,8 @@
       "onAutoForward": "notify"
     }
   },
+  
+  "postCreateCommand": "cd frontend && npm install && cd ../backend && go mod tidy && echo 'Post-Installationsprozess abgeschlossen'",
   
   "remoteUser": "root"
 }

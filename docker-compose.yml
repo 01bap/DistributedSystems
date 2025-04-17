@@ -1,28 +1,30 @@
-version: '1.0'
+# version: '1.0'
 
 services:
   backend:
     build:
-      context: ..
-      dockerfile: backend/Dockerfile
+      context: ./backend
+      dockerfile: Dockerfile
     depends_on:
       - db
     ports:
-      - 8081:8080
+      - 8081:3004
     networks:
       - app-net
       - data-net
 
   frontend:
     build: 
-      context: ..
-      dockerfile: frontend/Dockerfile
+      context: ./frontend
+      dockerfile: Dockerfile
+    
     environment:
       - PUBLIC_BACKEND_URL="http://localhost:8081"
     ports:
       - 3000:3000
     networks:
       - app-net
+    # restart: unless-stopped
 
   db:
     container_name: postgres
