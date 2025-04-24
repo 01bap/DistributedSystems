@@ -29,9 +29,6 @@ jobs:
         #        username: ${{ github.actor }}
         #        password: ${{ secrets.github_token }}
         steps:
-            - name: Building image
-              run: docker build -t $IMAGE_NAME_FRONTEND ./frontend
-
             - uses: actions/checkout@v2
             - name: Login to GitHub Container Registry
               uses: docker/login-action@v1
@@ -40,15 +37,15 @@ jobs:
                 username: ${{ github.actor }}
                 password: ${{ secrets.GITHUB_TOKEN }}
 
+            - name: Building image
+              run: docker build -t $IMAGE_NAME_FRONTEND ./frontend
+  
             - name: Pushing image
               run: docker push $REGISTRY/$REPOSITORY/$IMAGE_NAME_FRONTEND:$FRONTEND_TAG
     
     backend-image-publishing:
         runs-on: ubuntu-latest
         steps:
-            - name: Building image
-              run: docker build -t $IMAGE_NAME_BACKEND ./backend
-
             - uses: actions/checkout@v2
             - name: Login to GitHub Container Registry
               uses: docker/login-action@v1
@@ -56,6 +53,9 @@ jobs:
                 registry: ghcr.io
                 username: ${{ github.actor }}
                 password: ${{ secrets.GITHUB_TOKEN }}
+
+            - name: Building image
+              run: docker build -t $IMAGE_NAME_BACKEND ./backend
 
             - name: Pushing image
               run: docker push $REGISTRY/$REPOSITORY/$IMAGE_NAME_BACKEND:$BACKEND_TAG
