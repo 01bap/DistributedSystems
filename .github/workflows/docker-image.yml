@@ -13,7 +13,8 @@ permissions:
 
 env:
     REGISTRY: ghcr.io
-    REPOSITORY: ${{github.repository}}
+    #REPOSITORY: ${{github.repository}}
+    REPOSITORY: ${{github.actor}}
     IMAGE_NAME_FRONTEND: itemshop-frontend
     FRONTEND_TAG: latest
     IMAGE_NAME_BACKEND: itemshop-backend
