@@ -39,12 +39,9 @@ jobs:
 
             - name: Downcase REPOSITORY
               run: echo "REPOSITORY=${GITHUB_REPOSITORY@L}" >> "${GITHUB_ENV}"
-                
-            - name: Display result
-              run: echo $REPOSITORY and $REPOSITORY_NORMAL
 
             - name: Building image
-              run: docker build -t $IMAGE_NAME_FRONTEND ./frontend
+              run: docker build -t $REGISTRY/$REPOSITORY/$IMAGE_NAME_FRONTEND:$FRONTEND_TAG ./frontend
   
             - name: Pushing image
               run: docker push $REGISTRY/$REPOSITORY/$IMAGE_NAME_FRONTEND:$FRONTEND_TAG
@@ -60,8 +57,12 @@ jobs:
                 username: ${{ github.actor }}
                 password: ${{ secrets.GITHUB_TOKEN }}
 
+            # Maybe use some dependancy for those above and the downcase step
+            - name: Downcase REPOSITORY
+              run: echo "REPOSITORY=${GITHUB_REPOSITORY@L}" >> "${GITHUB_ENV}"
+  
             - name: Building image
-              run: docker build -t $IMAGE_NAME_BACKEND ./backend
+              run: docker build -t $REGISTRY/$REPOSITORY_NORMAL/$IMAGE_NAME_BACKEND:$BACKEND_TAG ./backend
 
             - name: Pushing image
               run: docker push $REGISTRY/$REPOSITORY_NORMAL/$IMAGE_NAME_BACKEND:$BACKEND_TAG
