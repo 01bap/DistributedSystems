@@ -41,7 +41,7 @@ jobs:
                 password: ${{ secrets.github_token }}
         steps:
             - name: Building image
-              run: docker build -t $IMAGE_NAME_BACKEND ./frontend
+              run: docker build -t $IMAGE_NAME_BACKEND ./backend
 
             - name: Pushing image
               run: docker push $REGESTRY/$REPOSITORY/$IMAGE_NAME_BACKEND:$BACKEND_TAG
