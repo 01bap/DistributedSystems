@@ -1,8 +1,8 @@
+import { env } from "$env/dynamic/public";
 import { ItemCollection } from "./entities/ItemCollection";
 import { itemStore } from "./entities/ItemStore.svelte";
 
-// let endpoint = "http://localhost:8080";
-let endpoint = "https://vigilant-doodle-xqvwj7j6wxjhvjw4-8080.app.github.dev";
+const endpoint = env.PUBLIC_BACKEND_URL;
 
 /**
  * Doesnt escape types in forms
