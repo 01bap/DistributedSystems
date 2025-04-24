@@ -1,0 +1,34 @@
+name: Docker Image Publishing
+
+on:
+    push:
+        branches:
+            - '*'
+    pull_request:
+        branches:
+            - '*'    
+            
+permissions:
+    packages: write # Allows action to publish packages
+
+env:
+    REGISTRY: ghcr.io
+    REPOSITORY: ${{github.repository}}
+    IMAGE_NAME_FRONTEND: itemshop-frontend
+    FRONTEND_TAG: latest
+    IMAGE_NAME_BACKEND: itemshop-backend
+    BACKEND_TAG: latest
+
+jobs:
+    frontend-image-publishing:
+        runs-on: ubuntu-latest
+        container:
+            credentials:
+                username: ${{ github.actor }}
+                password: ${{ secrets.github_token }}
+        steps:
+            - name: Building image
+              run: docker build -t $IMAGE_NAME_FRONTEND ./frontend
+
+            - name: Pushing image
+              run: docker push $REGESTRY/$REPOSITORY/$IMAGE_NAME_FRONTEND:$FRONTEND_TAG
