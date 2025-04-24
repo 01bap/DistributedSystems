@@ -32,3 +32,16 @@ jobs:
 
             - name: Pushing image
               run: docker push $REGESTRY/$REPOSITORY/$IMAGE_NAME_FRONTEND:$FRONTEND_TAG
+    
+    backend-image-publishing:
+        runs-on: ubuntu-latest
+        container:
+            credentials:
+                username: ${{ github.actor }}
+                password: ${{ secrets.github_token }}
+        steps:
+            - name: Building image
+              run: docker build -t $IMAGE_NAME_BACKEND ./frontend
+
+            - name: Pushing image
+              run: docker push $REGESTRY/$REPOSITORY/$IMAGE_NAME_BACKEND:$BACKEND_TAG
