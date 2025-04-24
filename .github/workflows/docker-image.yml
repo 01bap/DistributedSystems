@@ -3,9 +3,11 @@ name: Docker Image Publishing
 on:
     push:
         branches:
-            - '*'
+            - main
+            #- '*'
     pull_request:
         branches:
+            #- main
             - '*'    
             
 permissions:
@@ -62,7 +64,7 @@ jobs:
               run: echo "REPOSITORY=${GITHUB_REPOSITORY@L}" >> "${GITHUB_ENV}"
   
             - name: Building image
-              run: docker build -t $REGISTRY/$REPOSITORY_NORMAL/$IMAGE_NAME_BACKEND:$BACKEND_TAG ./backend
+              run: docker build -t $REGISTRY/$REPOSITORY/$IMAGE_NAME_BACKEND:$BACKEND_TAG ./backend
 
             - name: Pushing image
-              run: docker push $REGISTRY/$REPOSITORY_NORMAL/$IMAGE_NAME_BACKEND:$BACKEND_TAG
+              run: docker push $REGISTRY/$REPOSITORY/$IMAGE_NAME_BACKEND:$BACKEND_TAG
