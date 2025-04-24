@@ -13,10 +13,7 @@ permissions:
 
 env:
     REGISTRY: ghcr.io
-    REPOSITORY_ID: ${{github.repository_id}}
-    REPOSITORY_LOW: echo dddf ${{github.repository}}
-    dfhdgjh: echo "${{github.repository}}@L"
-    REPOSITORY: ${{github.repository}}
+    REPOSITORY_NORMAL: ${{github.repository}}
     IMAGE_NAME_FRONTEND: itemshop-frontend
     FRONTEND_TAG: latest
     IMAGE_NAME_BACKEND: itemshop-backend
@@ -41,10 +38,10 @@ jobs:
                 password: ${{ secrets.GITHUB_TOKEN }}
 
             - name: Downcase REPOSITORY
-              run: echo "REPOSITORY=${GITHUB_REPOSITORY@L}" >> "${GITHUB_ENV}"
+              run: echo "REPOSITORY=${{github.repository}}@L" >> "${GITHUB_ENV}"
                 
-            #- name: use REPO
-            #  run: echo The value of REPO is: $REPOSITORY
+            - name: Display result
+              run: echo $REPOSITORY and $REPOSITORY_NORMAL
 
             - name: Building image
               run: docker build -t $IMAGE_NAME_FRONTEND ./frontend
@@ -67,4 +64,4 @@ jobs:
               run: docker build -t $IMAGE_NAME_BACKEND ./backend
 
             - name: Pushing image
-              run: docker push $REGISTRY/$REPOSITORY/$IMAGE_NAME_BACKEND:$BACKEND_TAG
+              run: docker push $REGISTRY/$REPOSITORY_NORMAL/$IMAGE_NAME_BACKEND:$BACKEND_TAG
