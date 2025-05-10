@@ -3,13 +3,16 @@ package main
 import (
 	"app/handlers"
 	"app/storage"
+	"app/config"
+	
 
 	"github.com/gin-gonic/gin"
 )
 
 func main() {
+	cfg := config.LoadConfig()
 	// Initialize the database connection
-	storage.InitDB()
+	storage.InitDB(cfg)
 
 	// API
 	r := gin.Default()
@@ -26,6 +29,6 @@ func main() {
 	r.PUT("/items/:itemId", handlers.UpdateItemHandler)
 	r.DELETE("/items/:itemId", handlers.DeleteItemHandler)
 
-	// listen and serve on localhost:8080
-	r.Run()
+	// listen and serve on port defined in the config
+	r.Run(":" + cfg.ServerPort)
 }

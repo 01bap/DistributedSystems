@@ -2,8 +2,10 @@ package storage
 
 import (
 	"database/sql"
+	"fmt"
 	"log"
 
+	"app/config"
 	"app/models"
 
 	_ "github.com/lib/pq"
@@ -11,8 +13,10 @@ import (
 
 var DB *sql.DB
 
-func InitDB() {
-	connStr := "postgres://postgres:postgres@db:5432/shoppingdb?sslmode=disable"
+func InitDB(cfg config.Config) {
+	connStr := fmt.Sprintf("postgres://%s:%s@%s:%s/%s?sslmode=disable",
+		cfg.DBUser, cfg.DBPassword, cfg.DBHost, cfg.DBPort, cfg.DBName,
+	)
 
 	var err error
 	DB, err = sql.Open("postgres", connStr)
@@ -32,7 +36,7 @@ func InitDB() {
 		)
 	`)
 	if err != nil {
-		log.Fatal("❌ Fehler beim Erstellen der Tabelle:", err)
+		log.Fatal("Fehler beim Erstellen der Tabelle:", err)
 	}
 }
 
