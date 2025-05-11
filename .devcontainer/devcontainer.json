@@ -5,6 +5,14 @@
   "service": "dev",
   "workspaceFolder": "/workspaces/DistributedSystems",
 
+    "containerEnv": {
+    "DB_HOST": "db",
+    "DB_PORT": "5432",
+    "DB_USER": "postgres",
+    "DB_PASSWORD": "postgres",
+    "DB_NAME": "shoppingdb",
+    "SERVER_PORT": "8080"
+  },
 
   "customizations": {
     "vscode": {
