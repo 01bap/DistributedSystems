@@ -1,0 +1,70 @@
+name: Docker Image Publishing
+
+on:
+    push:
+        branches:
+            - main
+            #- '*'
+    pull_request:
+        branches:
+            #- main
+            - '*'    
+            
+permissions:
+    packages: write # Allows action to publish packages
+
+env:
+    REGISTRY: ghcr.io
+    REPOSITORY_NORMAL: ${{github.repository}}
+    IMAGE_NAME_FRONTEND: itemshop-frontend
+    FRONTEND_TAG: latest
+    IMAGE_NAME_BACKEND: itemshop-backend
+    BACKEND_TAG: latest
+
+jobs:
+    frontend-image-publishing:
+        runs-on: ubuntu-latest
+        #container:
+        #    image:
+        #        
+        #    credentials:
+        #        username: ${{ github.actor }}
+        #        password: ${{ secrets.github_token }}
+        steps:
+            - uses: actions/checkout@v2
+            - name: Login to GitHub Container Registry
+              uses: docker/login-action@v1
+              with:
+                registry: ghcr.io
+                username: ${{ github.actor }}
+                password: ${{ secrets.GITHUB_TOKEN }}
+
+            - name: Downcase REPOSITORY
+              run: echo "REPOSITORY=${GITHUB_REPOSITORY@L}" >> "${GITHUB_ENV}"
+
+            - name: Building image
+              run: docker build -t $REGISTRY/$REPOSITORY/$IMAGE_NAME_FRONTEND:$FRONTEND_TAG ./frontend
+  
+            - name: Pushing image
+              run: docker push $REGISTRY/$REPOSITORY/$IMAGE_NAME_FRONTEND:$FRONTEND_TAG
+    
+    backend-image-publishing:
+        runs-on: ubuntu-latest
+        steps:
+            - uses: actions/checkout@v2
+            - name: Login to GitHub Container Registry
+              uses: docker/login-action@v1
+              with:
+                registry: ghcr.io
+                username: ${{ github.actor }}
+                password: ${{ secrets.GITHUB_TOKEN }}
+
+            # Maybe use some dependancy for those above and the downcase step
+            - name: Downcase REPOSITORY
+              run: echo "REPOSITORY=${GITHUB_REPOSITORY@L}" >> "${GITHUB_ENV}"
+  
+            - name: Building image
+              run: docker build -t $REGISTRY/$REPOSITORY/$IMAGE_NAME_BACKEND:$BACKEND_TAG ./backend
+
+            - name: Pushing image
+              run: docker push $REGISTRY/$REPOSITORY/$IMAGE_NAME_BACKEND:$BACKEND_TAG

@@ -4,7 +4,6 @@
   "dockerComposeFile": "docker-compose.yml",
   "service": "dev",
   "workspaceFolder": "/workspaces/DistributedSystems",
-
     "containerEnv": {
     "DB_HOST": "db",
     "DB_PORT": "5432",
@@ -18,27 +17,33 @@
     "vscode": {
       "settings": {
         "terminal.integrated.shell.linux": "/bin/bash"
-      }
-    },
-    "extensions": [
-      "golang.go",
-      "svelte.svelte-vscode"
-    ]
+      },
+      "extensions": [
+        "golang.go",
+        "svelte.svelte-vscode",
+        "ms-azuretools.vscode-docker",
+        "ms-vscode.vscode-typescript-next",
+        "github.vscode-github-actions"
+      ]
+    }
   },
-
-  "postCreateCommand": "cd frontend && npm install && cd ../backend && go mod tidy && echo 'Post-Installationsprozess abgeschlossen'",
+  "features": {
+    "ghcr.io/devcontainers/features/docker-in-docker:2": {}
+  },
 
   "forwardPorts": [5173,8080],
   "portsAttributes": {
     "5173": {
       "label": "Frontend (Svelte)",
-      "onAutoForward": "notify"
+      "onAutoForward": "openBrowser"
     },
     "8080": {
       "label": "Backend (Gin)",
       "onAutoForward": "notify"
     }
   },
+  
+  "postCreateCommand": "cd frontend && npm install && cd ../backend && go mod tidy && echo 'Post-Installationsprozess abgeschlossen'",
   
   "remoteUser": "root"
 }
