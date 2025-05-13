@@ -6,19 +6,17 @@ A repository to practice in class on distributed systems.
 
 ## Backend
 Execute the following commands:
+
     cd backend/
     go run .
 
 ## Frontend
 Execute the following commands:
+
     cd frontend/
     npm run dev
 
-Make sure to create an environment file .env in the frontend directory:
 
-```
-PUBLIC_BACKEND_URL="${BACKEND_URL}"
-```
 
 ## Working in a dev container
 

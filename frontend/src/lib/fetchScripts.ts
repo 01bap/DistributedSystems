@@ -2,7 +2,7 @@ import { env } from "$env/dynamic/public";
 import { ItemCollection } from "./entities/ItemCollection";
 import { itemStore } from "./entities/ItemStore.svelte";
 
-const endpoint = env.PUBLIC_BACKEND_URL;
+const endpoint = import.meta.env.VITE_PUBLIC_BACKEND_URL;
 
 /**
  * Doesnt escape types in forms

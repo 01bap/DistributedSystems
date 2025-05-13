@@ -4,6 +4,15 @@
   "dockerComposeFile": "docker-compose.yml",
   "service": "dev",
   "workspaceFolder": "/workspaces/DistributedSystems",
+    "containerEnv": {
+    "DB_HOST": "db",
+    "DB_PORT": "5432",
+    "DB_USER": "postgres",
+    "DB_PASSWORD": "postgres",
+    "DB_NAME": "shoppingdb",
+    "SERVER_PORT": "8080",
+    "VITE_PUBLIC_BACKEND_URL": "https://bug-free-space-giggle-4j9745j5vjhqqq-8080.app.github.dev"
+  },
 
   "customizations": {
     "vscode": {
@@ -35,7 +44,7 @@
     }
   },
   
-  "postCreateCommand": "cd frontend && npm install && cd ../backend && go mod tidy && echo 'Post-Installationsprozess abgeschlossen'",
+  "postCreateCommand": "cd frontend && npm install && echo \"VITE_PUBLIC_BACKEND_URL=$VITE_PUBLIC_BACKEND_URL\" > .env && cd ../backend && go mod tidy && echo 'Post-Installationsprozess abgeschlossen'",
   
   "remoteUser": "root"
 }
