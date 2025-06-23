@@ -4,15 +4,16 @@
   "dockerComposeFile": "docker-compose.yml",
   "service": "dev",
   "workspaceFolder": "/workspaces/DistributedSystems",
-    "containerEnv": {
+  "containerEnv": {
     "DB_HOST": "db",
     "DB_PORT": "5432",
     "DB_USER": "postgres",
     "DB_PASSWORD": "postgres",
     "DB_NAME": "shoppingdb",
     "SERVER_PORT": "8080",
-    "VITE_PUBLIC_BACKEND_URL": "https://bug-free-space-giggle-4j9745j5vjhqqq-8080.app.github.dev"
+    "VITE_PUBLIC_BACKEND_URL": "https://congenial-chainsaw-qgpqwjwrqpvh94w4-8080.app.github.dev"
   },
+  "mounts": ["source=kind-vol,target=/var/lib/kubevols,type=volume"],
 
   "customizations": {
     "vscode": {
@@ -44,7 +45,7 @@
     }
   },
   
-  "postCreateCommand": "cd frontend && npm install && echo \"VITE_PUBLIC_BACKEND_URL=$VITE_PUBLIC_BACKEND_URL\" > .env && cd ../backend && go mod tidy && echo 'Post-Installationsprozess abgeschlossen'",
+  "postCreateCommand": "go install sigs.k8s.io/kind@v0.29.0 && kind create cluster && cd frontend && npm install && echo \"VITE_PUBLIC_BACKEND_URL=$VITE_PUBLIC_BACKEND_URL\" > .env && cd ../backend && go mod tidy && echo 'Post-Installationsprozess abgeschlossen'",
   
   "remoteUser": "root"
 }
