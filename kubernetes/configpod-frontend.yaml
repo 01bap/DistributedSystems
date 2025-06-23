@@ -1,0 +1,9 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: frontend-config
+data:
+  config.json: |
+    {
+      "VITE_PUBLIC_BACKEND_URL": "http://test-url:187"
+    }

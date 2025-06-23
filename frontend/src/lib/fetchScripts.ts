@@ -1,5 +1,5 @@
-import { env } from "$env/dynamic/public";
-import { PUBLIC_BACKEND_URL } from "$env/static/public";
+// import { env } from "$env/dynamic/public";
+// import { PUBLIC_BACKEND_URL } from "$env/static/public";
 import { ItemCollection } from "./entities/ItemCollection";
 import { itemStore } from "./entities/ItemStore.svelte";
 
@@ -37,13 +37,13 @@ export async function handleFormSubmition(
     setResult: (val: ItemCollection | null) => void,
     setError: (val: string | null) => void
 ) {
+    event.preventDefault();
+
     // Runtime env load
     let config = await fetch('/config.json').then(res => res.json());
     const endpoint = config.VITE_PUBLIC_BACKEND_URL;
     // ----------------
 
-    event.preventDefault();
-    console.log(endpoint, PUBLIC_BACKEND_URL)
     const NAME_FOR_METHODCALLBACK = "_method";
     const regex = new RegExp("(get|delete)", "i");
     const form = event.target as HTMLFormElement;
