@@ -7,14 +7,9 @@ metadata:
 spec:
   containers:
   - name: frontend
-    args:
-      - printf Passed URL=$VITE_PUBLIC_BACKEND_URL'\n';
-    command:
-      - sh
-      - -c
     image: ghcr.io/01bap/distributedsystems/itemshop-frontend:latest
     ports:
     - containerPort: 3000
-    env:
-    - name: VITE_PUBLIC_BACKEND_URL
-      value: "http://backend:8080"
+    # env:
+    # - name: VITE_PUBLIC_BACKEND_URL
+    #   value: "http://localhost:8080"

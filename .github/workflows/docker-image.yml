@@ -5,6 +5,7 @@ on:
         branches:
             - main
             #- '*'
+            - Kubernetes
     pull_request:
         branches:
             #- main

@@ -1,8 +1,11 @@
 import { env } from "$env/dynamic/public";
+import { PUBLIC_BACKEND_URL } from "$env/static/public";
 import { ItemCollection } from "./entities/ItemCollection";
 import { itemStore } from "./entities/ItemStore.svelte";
 
-const endpoint = import.meta.env.VITE_PUBLIC_BACKEND_URL;
+// const endpoint = import.meta.env.VITE_PUBLIC_BACKEND_URL;
+// const endpoint = env.PUBLIC_BACKEND_URL;
+const endpoint = PUBLIC_BACKEND_URL;
 
 /**
  * Doesnt escape types in forms
@@ -34,8 +37,13 @@ export async function handleFormSubmition(
     setResult: (val: ItemCollection | null) => void,
     setError: (val: string | null) => void
 ) {
+    // Runtime env load
+    // let config = await fetch('/config.json').then(res => res.json());
+    // const endpoint = config.VITE_PUBLIC_BACKEND_URL;
+    // ----------------
+
     event.preventDefault();
-    console.debug(endpoint)
+    console.log(endpoint, PUBLIC_BACKEND_URL)
     const NAME_FOR_METHODCALLBACK = "_method";
     const regex = new RegExp("(get|delete)", "i");
     const form = event.target as HTMLFormElement;
