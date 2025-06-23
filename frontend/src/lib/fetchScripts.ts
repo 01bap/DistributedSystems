@@ -5,7 +5,7 @@ import { itemStore } from "./entities/ItemStore.svelte";
 
 // const endpoint = import.meta.env.VITE_PUBLIC_BACKEND_URL;
 // const endpoint = env.PUBLIC_BACKEND_URL;
-const endpoint = PUBLIC_BACKEND_URL;
+// const endpoint = PUBLIC_BACKEND_URL;
 
 /**
  * Doesnt escape types in forms
@@ -38,8 +38,8 @@ export async function handleFormSubmition(
     setError: (val: string | null) => void
 ) {
     // Runtime env load
-    // let config = await fetch('/config.json').then(res => res.json());
-    // const endpoint = config.VITE_PUBLIC_BACKEND_URL;
+    let config = await fetch('/config.json').then(res => res.json());
+    const endpoint = config.VITE_PUBLIC_BACKEND_URL;
     // ----------------
 
     event.preventDefault();
