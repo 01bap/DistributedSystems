@@ -1,7 +1,7 @@
 ARG CODE_VERSION=tip-alpine3.20
 FROM golang:${CODE_VERSION} AS builder
 
-ENV PORT=3004
+#ENV PORT=8080
 
 WORKDIR /app
 COPY . .
@@ -10,7 +10,7 @@ RUN go mod download
 RUN go build -o /app/itemStore
 
 
-EXPOSE $PORT
+#EXPOSE $PORT
 CMD ["./itemStore"]
 
 

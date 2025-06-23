@@ -33,10 +33,18 @@
     "ghcr.io/devcontainers/features/docker-in-docker:2": {}
   },
 
-  "forwardPorts": [5173,8080],
+  "forwardPorts": [5173,3000,3001,8080],
   "portsAttributes": {
     "5173": {
-      "label": "Frontend (Svelte)",
+      "label": "Frontend dev (Svelte)",
+      "onAutoForward": "openBrowser"
+    },
+    "3000": {
+      "label": "Frontend kubernetes (Svelte)",
+      "onAutoForward": "openBrowser"
+    },
+    "3001": {
+      "label": "Frontend docker (Svelte)",
       "onAutoForward": "openBrowser"
     },
     "8080": {

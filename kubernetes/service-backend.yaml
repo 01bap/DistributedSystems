@@ -7,5 +7,7 @@ spec:
     app.kubernetes.io/name: backend
   ports:
     - protocol: TCP
-      port: 3004
-      targetPort: 3004
+      port: 8080
+      targetPort: 8080
+status:
+  loadBalancer: {}

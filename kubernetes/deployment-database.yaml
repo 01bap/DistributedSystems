@@ -3,19 +3,19 @@ kind: Deployment
 metadata:
   name: database-deployment
   labels:
-    app: database
+    app: db
 spec:
   replicas: 1
   selector:
     matchLabels:
-      app: database
+      app: db
   template:
     metadata:
       labels:
-        app: database
+        app: db
     spec:
       containers:
-      - name: database
+      - name: db
         image: postgres:15
         ports:
         - containerPort: 5432

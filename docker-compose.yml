@@ -22,7 +22,7 @@ services:
       context: ./frontend
       dockerfile: Dockerfile
     environment:
-      PUBLIC_BACKEND_URL: "http://localhost:3004"
+      PUBLIC_BACKEND_URL: "http://localhost:8080"
       # Uses the local url
     ports:
       - 3001:3000
@@ -37,7 +37,7 @@ services:
     depends_on:
       - db
     ports:
-      - 3004:3004
+      - 8080:8080
     networks:
       - app-net
       - data-net

@@ -35,6 +35,7 @@ export async function handleFormSubmition(
     setError: (val: string | null) => void
 ) {
     event.preventDefault();
+    console.debug(endpoint)
     const NAME_FOR_METHODCALLBACK = "_method";
     const regex = new RegExp("(get|delete)", "i");
     const form = event.target as HTMLFormElement;
