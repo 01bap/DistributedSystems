@@ -11,7 +11,7 @@
     "DB_PASSWORD": "postgres",
     "DB_NAME": "shoppingdb",
     "SERVER_PORT": "8080",
-    "VITE_PUBLIC_BACKEND_URL": "https://sturdy-space-robot-49w7x5x4gjw3q57p-8080.app.github.dev"
+    "VITE_PUBLIC_BACKEND_URL": "https://musical-trout-wjg7wpw69xjhgvwq-8080.app.github.dev"
   },
   "mounts": ["source=kind-vol,target=/var/lib/kubevols,type=volume"],
 

@@ -1,5 +1,10 @@
 #!/bin/bash
 
+# Updating config files
+sed -i '/PUBLIC_BACKEND_URL/c\      PUBLIC_BACKEND_URL: '$VITE_PUBLIC_BACKEND_URL'' docker-compose.yml
+sed -i '/PUBLIC_BACKEND_URL/{n;s/.*/      value: '$VITE_PUBLIC_BACKEND_URL'/;}' kubernetes/pod-frontend.yaml
+
+# Initalize cluster with kind
 go install sigs.k8s.io/kind@v0.29.0
 kind create cluster
 
@@ -12,11 +17,6 @@ echo PUBLIC_BACKEND_URL=$VITE_PUBLIC_BACKEND_URL >> .env
 echo '{' > static/config.json
 echo '  "VITE_PUBLIC_BACKEND_URL": "'$VITE_PUBLIC_BACKEND_URL'"' >> static/config.json
 echo '}' >> static/config.json
-
-# Updating config files
-sed -i '/PUBLIC_BACKEND_URL/c\      PUBLIC_BACKEND_URL: '$VITE_PUBLIC_BACKEND_URL'' docker-compose.yml
-
-sed -i '/PUBLIC_BACKEND_URL/{n;s/.*/      value: '$VITE_PUBLIC_BACKEND_URL'/;}' kubernetes/pod-frontend.yaml
 
 cd ../backend
 go mod tidy
