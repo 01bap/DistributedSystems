@@ -44,7 +44,9 @@ jobs:
               run: echo "REPOSITORY=${GITHUB_REPOSITORY@L}" >> "${GITHUB_ENV}"
 
             - name: Creating dynamic env
-              run: echo "PUBLIC_BACKEND_URL=DYNAMIC_URL\nVITE_PUBLIC_BACKEND_URL=STATIC_URL" > ./frontend/.env
+              run: |
+                echo "PUBLIC_BACKEND_URL=DYNAMIC_URL" > ./frontend/.env
+                echo "VITE_PUBLIC_BACKEND_URL=STATIC_URL" >> ./frontend/.env
 
             - name: Building image
               run: docker build -t $REGISTRY/$REPOSITORY/$IMAGE_NAME_FRONTEND:$FRONTEND_TAG ./frontend
