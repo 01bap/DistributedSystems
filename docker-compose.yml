@@ -21,8 +21,8 @@ services:
     build: 
       context: ./frontend
       dockerfile: Dockerfile
-    # environment:
-    #   PUBLIC_BACKEND_URL: "http://url:8080"
+    environment:
+      PUBLIC_BACKEND_URL: "https://sturdy-space-robot-49w7x5x4gjw3q57p-8080.app.github.dev"
     ports:
       - 3001:3000
     networks:

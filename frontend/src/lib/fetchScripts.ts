@@ -42,9 +42,9 @@ export async function handleFormSubmition(
     // Runtime env load
     // let config = await fetch('/config.json').then(res => res.json());
     // const endpoint = config.VITE_PUBLIC_BACKEND_URL;
-    let config = await fetch('/api/endpoint-request').then(res => res.json());
-    let endpoint = config.VITE_PUBLIC_BACKEND_URL;
-    // let endpoint = env.PUBLIC_BACKEND_URL;
+    // let config = await fetch('/api/endpoint-request').then(res => res.json());
+    // let endpoint = config.VITE_PUBLIC_BACKEND_URL;
+    let endpoint = env.PUBLIC_BACKEND_URL;
     // let endpoint = import.meta.env.VITE_PUBLIC_BACKEND_URL;
     // ----------------
 
