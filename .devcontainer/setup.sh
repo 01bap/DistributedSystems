@@ -5,8 +5,10 @@ kind create cluster
 
 cd frontend
 npm install
+# ENV -- Not used anymore
 echo VITE_PUBLIC_BACKEND_URL=$VITE_PUBLIC_BACKEND_URL > .env
 echo PUBLIC_BACKEND_URL=$VITE_PUBLIC_BACKEND_URL >> .env
+# Workaround with config file
 echo '{' > static/config.json
 echo '  "VITE_PUBLIC_BACKEND_URL": "'$VITE_PUBLIC_BACKEND_URL'"' >> static/config.json
 echo '}' >> static/config.json

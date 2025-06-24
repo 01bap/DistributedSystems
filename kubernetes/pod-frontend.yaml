@@ -10,14 +10,16 @@ spec:
     image: ghcr.io/01bap/distributedsystems/itemshop-frontend:latest
     ports:
     - containerPort: 3000
-    # env:
-    # - name: VITE_PUBLIC_BACKEND_URL
-    #   value: "http://localhost:8080"
-    volumeMounts:
-    - name: config-volume
-      mountPath: /usr/app/static/config.json
-      subPath: config.json
-  volumes:
-    - name: config-volume
-      configMap:
-        name: frontend-config
+    env:
+    - name: VITE_PUBLIC_BACKEND_URL
+      value: "http://backend:8080"
+    - name: PUBLIC_BACKEND_URL
+      value: "http://backend:8080"
+  #   volumeMounts:
+  #   - name: config-volume
+  #     mountPath: /app/static/config.json
+  #     subPath: config.json
+  # volumes:
+  #   - name: config-volume
+  #     configMap:
+  #       name: frontend-config
