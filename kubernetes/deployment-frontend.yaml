@@ -1,0 +1,26 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: frontend-deployment
+  labels:
+    app: frontend
+spec:
+  replicas: 3
+  selector:
+    matchLabels:
+      app: frontend
+  template:
+    metadata:
+      labels:
+        app: frontend
+    spec:
+      containers:
+      - name: frontend
+        image: ghcr.io/01bap/distributedsystems/itemshop-frontend:latest
+        ports:
+        - containerPort: 3000
+        # env:
+        # - name: VITE_PUBLIC_BACKEND_URL
+        #   value: "http://localhost:8080"
+        # - name: PUBLIC_BACKEND_URL
+        #   value: "http://localhost:8080"

@@ -1,0 +1,23 @@
+apiVersion: v1
+kind: Pod
+metadata:
+  name: frontend
+  labels:
+    app.kubernetes.io/name: frontend
+spec:
+  containers:
+  - name: frontend
+    image: ghcr.io/01bap/distributedsystems/itemshop-frontend:latest
+    ports:
+    - containerPort: 3000
+    env:
+    - name: PUBLIC_BACKEND_URL
+      value: https://musical-trout-wjg7wpw69xjhgvwq-8080.app.github.dev
+  #   volumeMounts:
+  #   - name: config-volume
+  #     mountPath: /app/static/config.json
+  #     subPath: config.json
+  # volumes:
+  #   - name: config-volume
+  #     configMap:
+  #       name: frontend-config

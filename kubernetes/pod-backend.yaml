@@ -1,0 +1,25 @@
+apiVersion: v1
+kind: Pod
+metadata:
+  name: backend
+  labels:
+    app.kubernetes.io/name: backend
+spec:
+  containers:
+  - name: backend
+    image: ghcr.io/01bap/distributedsystems/itemshop-backend:latest
+    ports:
+    - containerPort: 8080
+    env:
+    - name: DB_HOST
+      value: db
+    - name: DB_PORT
+      value: "5432"
+    - name: DB_USER
+      value: postgres
+    - name: DB_PASSWORD
+      value: postgres
+    - name: DB_NAME
+      value: shoppingdb
+    - name: SERVER_PORT
+      value: "8080"

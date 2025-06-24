@@ -1,8 +1,11 @@
 import { env } from "$env/dynamic/public";
+import { PUBLIC_BACKEND_URL } from "$env/static/public";
 import { ItemCollection } from "./entities/ItemCollection";
 import { itemStore } from "./entities/ItemStore.svelte";
 
-const endpoint = import.meta.env.VITE_PUBLIC_BACKEND_URL;
+// const endpoint = import.meta.env.VITE_PUBLIC_BACKEND_URL;
+// const endpoint = env.PUBLIC_BACKEND_URL;
+// const endpoint = PUBLIC_BACKEND_URL;
 
 /**
  * Doesnt escape types in forms
@@ -35,6 +38,16 @@ export async function handleFormSubmition(
     setError: (val: string | null) => void
 ) {
     event.preventDefault();
+
+    // Runtime env load
+    // let config = await fetch('/config.json').then(res => res.json());
+    // const endpoint = config.VITE_PUBLIC_BACKEND_URL;
+    // let config = await fetch('/api/endpoint-request').then(res => res.json());
+    // let endpoint = config.VITE_PUBLIC_BACKEND_URL;
+    let endpoint = env.PUBLIC_BACKEND_URL;
+    // let endpoint = import.meta.env.VITE_PUBLIC_BACKEND_URL;
+    // ----------------
+
     const NAME_FOR_METHODCALLBACK = "_method";
     const regex = new RegExp("(get|delete)", "i");
     const form = event.target as HTMLFormElement;
@@ -57,6 +70,8 @@ export async function handleFormSubmition(
             if(data.id as number < 1) throw new Error(`No item for id ${data.id} found!`);
             uri = endpoint + path + `/${data.id}`;
         }
+
+        console.log("Endpoint: " + endpoint, "\nSTATIC_PUBLIC: " + PUBLIC_BACKEND_URL, "\nDYNAMIC_PUBLIC: " + env.PUBLIC_BACKEND_URL, "\nURI: " + uri);
 
         if(regex.test(method)) {
             res = await fetch(uri, {
