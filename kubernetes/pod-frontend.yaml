@@ -12,7 +12,7 @@ spec:
     - containerPort: 3000
     env:
     - name: PUBLIC_BACKEND_URL
-      value: SOME STUFF
+      value: https://musical-trout-wjg7wpw69xjhgvwq-8080.app.github.dev
   #   volumeMounts:
   #   - name: config-volume
   #     mountPath: /app/static/config.json
