@@ -13,6 +13,11 @@ echo '{' > static/config.json
 echo '  "VITE_PUBLIC_BACKEND_URL": "'$VITE_PUBLIC_BACKEND_URL'"' >> static/config.json
 echo '}' >> static/config.json
 
+# Updating config files
+sed -i '/PUBLIC_BACKEND_URL/c\      PUBLIC_BACKEND_URL: '$VITE_PUBLIC_BACKEND_URL'' docker-compose.yml
+
+sed -i '/PUBLIC_BACKEND_URL/{n;s/.*/      value: '$VITE_PUBLIC_BACKEND_URL'/;}' kubernetes/pod-frontend.yaml
+
 cd ../backend
 go mod tidy
 

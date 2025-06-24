@@ -11,10 +11,8 @@ spec:
     ports:
     - containerPort: 3000
     env:
-    # - name: VITE_PUBLIC_BACKEND_URL
-    #   value: "http://backend:8080"
     - name: PUBLIC_BACKEND_URL
-      value: "https://sturdy-space-robot-49w7x5x4gjw3q57p-8080.app.github.dev"
+      value: SOME STUFF
   #   volumeMounts:
   #   - name: config-volume
   #     mountPath: /app/static/config.json
