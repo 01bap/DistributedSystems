@@ -18,7 +18,7 @@
                 <div class="list-col-grow">
                     <div class="text-lg font-bold">{item.name}</div>
                     <!-- When clicked on then change to input to create a put request which overwrites the quantity -->
-                    <div class="text-xs uppercase font-semibold opacity-60">{item.quantity}</div>
+                    <div class="text-xs uppercase font-semibold opacity-60">Count: {item.quantity}</div>
                 </div>
 
                 <!-- Should open the post dialog to update/create items -->

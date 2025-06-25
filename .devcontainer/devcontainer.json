@@ -11,7 +11,7 @@
     "DB_PASSWORD": "postgres",
     "DB_NAME": "shoppingdb",
     "SERVER_PORT": "8080",
-    "VITE_PUBLIC_BACKEND_URL": "https://musical-trout-wjg7wpw69xjhgvwq-8080.app.github.dev"
+    "VITE_PUBLIC_BACKEND_URL": "https://psychic-couscous-jwq5xvx65v4hp67x-8080.app.github.dev"     // Insert your backend url (remove trailing slashes)
   },
   "mounts": ["source=kind-vol,target=/var/lib/kubevols,type=volume"],
 
@@ -53,7 +53,7 @@
     }
   },
   
-  "postCreateCommand": "bash ./.devcontainer/setup.sh",
+  "postCreateCommand": "bash ./.devcontainer/setup.sh $VITE_PUBLIC_BACKEND_URL",
   
   "remoteUser": "root"
 }
